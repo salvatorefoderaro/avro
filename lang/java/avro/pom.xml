@@ -35,6 +35,7 @@
   <packaging>bundle</packaging>
 
   <properties>
+    <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../jacoco-tests-report-aggregator/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
     <main.basedir>${project.parent.parent.basedir}</main.basedir>
     <osgi.import>
       !org.apache.avro*,

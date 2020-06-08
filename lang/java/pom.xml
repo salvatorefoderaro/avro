@@ -71,6 +71,7 @@
     <jar-plugin.version>3.2.0</jar-plugin.version>
     <javacc-plugin.version>2.6</javacc-plugin.version>
     <maven-site-plugin.version>3.9.0</maven-site-plugin.version>
+    <jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
     <plugin-plugin.version>3.6.0</plugin-plugin.version>
     <plugin-tools-javadoc.version>3.5</plugin-tools-javadoc.version>
     <shade-plugin.version>3.2.3</shade-plugin.version>
@@ -91,8 +92,8 @@
     <module>thrift</module>
     <module>archetypes</module>
     <module>grpc</module>
-    <module>integration-test</module>
     <module>perf</module>
+    <module>jacoco-tests-report-aggregator</module>
   </modules>
 
   <build>
@@ -192,7 +193,7 @@
                  rather than the console. -->
             <redirectTestOutputToFile>true</redirectTestOutputToFile>
             <failIfNoTests>false</failIfNoTests>
-            <argLine>-Xmx1000m</argLine>
+            <argLine>@{argLine} -Xmx1000m</argLine>
           </configuration>
         </plugin>
         <plugin>
@@ -256,6 +257,25 @@
       </plugins>
     </pluginManagement>
     <plugins>
+          <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>${jacoco-maven-plugin.version}</version>
+        <executions>
+          <execution>
+            <id>prepare-agent</id>
+            <goals>
+             <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>report</id>
+            <goals>
+             <goal>report</goal>
+            </goals>
+          </execution>
+        </executions>
+        </plugin>
       <plugin>
         <groupId>org.apache.felix</groupId>
         <artifactId>maven-bundle-plugin</artifactId>
@@ -337,158 +357,6 @@
       </plugin>
     </plugins>
   </build>
-
-  <reporting>
-  </reporting>
-
-  <profiles>
-    <profile>
-      <id>m2e</id>
-      <activation>
-        <property><name>m2e.version</name></property>
-      </activation>
-      <build>
-        <pluginManagement>
-          <plugins>
-            <plugin>
-              <groupId>org.eclipse.m2e</groupId>
-              <artifactId>lifecycle-mapping</artifactId>
-              <version>1.0.0</version>
-              <configuration>
-                <lifecycleMappingMetadata>
-                  <pluginExecutions>
-                    <pluginExecution>
-                      <pluginExecutionFilter>
-                        <groupId>com.diffplug.spotless</groupId>
-                        <artifactId>spotless-maven-plugin</artifactId>
-                        <goals>
-                          <goal>check</goal>
-                        </goals>
-                      </pluginExecutionFilter>
-                      <action>
-                        <ignore></ignore>
-                      </action>
-                    </pluginExecution>
-                    <pluginExecution>
-                      <pluginExecutionFilter>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-plugin-plugin</artifactId>
-                        <versionRange>[${plugin-plugin.version},)</versionRange>
-                        <goals>
-                          <goal>helpmojo</goal>
-                          <goal>descriptor</goal>
-                        </goals>
-                      </pluginExecutionFilter>
-                      <action>
-                        <ignore />
-                      </action>
-                    </pluginExecution>
-                    <pluginExecution>
-                      <pluginExecutionFilter>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>exec-maven-plugin</artifactId>
-                        <versionRange>[$${exec-plugin.version},)</versionRange>
-                        <goals>
-                          <goal>exec</goal>
-                        </goals>
-                      </pluginExecutionFilter>
-                      <action>
-                        <ignore />
-                      </action>
-                    </pluginExecution>
-                    <pluginExecution>
-                      <pluginExecutionFilter>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>javacc-maven-plugin</artifactId>
-                        <versionRange>[${javacc-plugin.version},)</versionRange>
-                        <goals>
-                          <goal>javacc</goal>
-                        </goals>
-                      </pluginExecutionFilter>
-                      <action>
-                        <ignore />
-                      </action>
-                    </pluginExecution>
-                    <pluginExecution>
-                      <pluginExecutionFilter>
-                        <groupId>org.apache.avro</groupId>
-                        <artifactId>avro-maven-plugin</artifactId>
-                        <versionRange>[${project.version},)</versionRange>
-                        <goals>
-                          <goal>protocol</goal>
-                          <goal>idl-protocol</goal>
-                          <goal>schema</goal>
-                        </goals>
-                      </pluginExecutionFilter>
-                      <action>
-                        <ignore />
-                      </action>
-                    </pluginExecution>
-                  </pluginExecutions>
-                </lifecycleMappingMetadata>
-              </configuration>
-            </plugin>
-          </plugins>
-        </pluginManagement>
-      </build>
-    </profile>
-    <profile>
-      <id>interop-data-test</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <version>${surefire-plugin.version}</version>
-            <configuration>
-              <includes>
-                <include>**/DataFileInteropTest*</include>
-              </includes>
-              <excludes>
-              </excludes>
-              <enableAssertions>false</enableAssertions>
-              <forkCount>1</forkCount>
-              <reuseForks>true</reuseForks>
-              <redirectTestOutputToFile>false</redirectTestOutputToFile>
-              <systemPropertyVariables>
-                <test.dir>../../../build/interop/data/</test.dir>
-              </systemPropertyVariables>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>mac</id>
-      <activation>
-        <os>
-        <family>mac</family>
-        </os>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <configuration>
-              <systemPropertyVariables>
-                <!-- avro-mapred will fail in tests on mac without this -->
-                <java.security.krb5.realm>OX.AC.UK</java.security.krb5.realm>
-                <java.security.krb5.kdc>kdc0.ox.ac.uk:kdc1.ox.ac.uk</java.security.krb5.kdc>
-              </systemPropertyVariables>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <!-- This profile is used on tests to validate backwards compatibility with Hadoop 2 -->
-    <profile>
-      <id>hadoop2</id>
-      <properties>
-        <hadoop.version>2.7.7</hadoop.version>
-      </properties>
-    </profile>
-  </profiles>
 
   <!-- dependencyManagement can be used to define dependency versions, scopes, and
     excludes to be shared by child projects. Child projects will not inherit these dependencies,
