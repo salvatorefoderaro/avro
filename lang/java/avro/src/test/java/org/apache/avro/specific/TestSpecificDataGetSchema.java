@@ -26,110 +26,104 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
-
 import org.apache.avro.Schema;
 import org.junit.Assert;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 @RunWith(Parameterized.class)
 public class TestSpecificDataGetSchema {
 
-  private String b1;
-  private String b2;
-  private String schema;
-  private int s1;
-  private int s2;
+  private java.lang.reflect.Type classType;
   private Object result;
+  private static final String ERROR = "Not a Specific class: class java.lang.Exception";
   Collection<String> array = new LinkedList<String>();
   Map<String, String> map = new HashMap<>();
-  Schema a;
 
   @Parameterized.Parameters
   public static Collection BufferedChannelParameters() throws Exception {
-    return Arrays.asList(new Object[][] { { "correctSchema", "correctSchemaEqual", "int", 0, 0, 0 },
-        { "correctSchema", "correctSchema", "float", 0, 0, -1 } });
+    return Arrays.asList(new Object[][] { 
+    	{null, "Unknown type: null"},
+    	{testabc("AAAA"), ERROR},
+        {testabc("float"), Schema.Type.FLOAT} 
+    	});
   }
 
-  public TestSpecificDataGetSchema(String b1, String b2, String schema, int s1, int s2, Object result) {
-
-    this.b1 = b1;
-    this.b2 = b2;
-    this.schema = schema;
-    this.s1 = s1;
-    this.s2 = s2;
+  public TestSpecificDataGetSchema(java.lang.reflect.Type classType, Object result) {
+    this.classType = classType;
     this.result = result;
   }
 
-  @Rule
-  public ExpectedException exceptions = ExpectedException.none();
-
-  @Test
-  public void testSkipLong() throws IOException, NoSuchFieldException, SecurityException {
-
-    if (!(result instanceof Integer)) {
-      exceptions.expect(Exception.class);
-    }
-
+  public static java.lang.reflect.Type testabc(String classTypeString) throws NoSuchFieldException, SecurityException{
+    
+    java.lang.reflect.Type classType = null;
     Field attributeField = null;
-    java.lang.reflect.Type classType = String.class;
-    Schema.Type schemaType = null;
-    switch (this.schema) {
+    switch (classTypeString) {
     case "int":
       classType = Integer.class;
-      schemaType = Schema.Type.INT;
       break;
+      
+    case "boolean":
+        classType = Integer.class;
+        break;
 
     case "null":
       classType = Void.class;
-      schemaType = Schema.Type.NULL;
       break;
 
     case "long":
       classType = Long.class;
-      schemaType = Schema.Type.LONG;
       break;
 
     case "float":
       classType = Float.class;
-      schemaType = Schema.Type.FLOAT;
       break;
 
     case "double":
       classType = Double.class;
-      schemaType = Schema.Type.DOUBLE;
       break;
 
     case "bytes":
       classType = ByteBuffer.class;
-      schemaType = Schema.Type.BYTES;
       break;
 
     case "string":
       classType = String.class;
-      schemaType = Schema.Type.STRING;
       break;
 
     case "map":
       attributeField = TestSpecificDataGetSchema.class.getDeclaredField("map");
       classType = (ParameterizedType) attributeField.getGenericType();
-      schemaType = Schema.Type.MAP;
       break;
 
     case "array":
       attributeField = TestSpecificDataGetSchema.class.getDeclaredField("arr");
       classType = (ParameterizedType) attributeField.getGenericType();
-      schemaType = Schema.Type.ARRAY;
       break;
 
     default:
-
+      classType = Exception.class;
     }
 
-    Assert.assertEquals(schemaType, SpecificData.get().getSchema(classType).getType());
+    return classType;
+  }
+
+  @Test
+  public void testSkipLong() throws IOException, NoSuchFieldException, SecurityException {
+
+    String schemaString = "{\"type\": \"enum\",\n" + "  \"name\": \"Schema.Type\",\n"
+    + "  \"symbols\" : [\"ARRAY\", \"INT\", \"DIAMONDS\", \"CLUBS\"]\n" + "}";
+    Schema schema = new Schema.Parser().parse(schemaString);
+
+    System.out.println(SpecificData.get().createEnum("INT", schema).getClass());
+    
+    
+    try {
+    	Assert.assertEquals(result, SpecificData.get().getSchema(classType).getType());
+    } catch (Exception e) {
+    	Assert.assertEquals(result, e.getMessage());
+    }
 
   }
 

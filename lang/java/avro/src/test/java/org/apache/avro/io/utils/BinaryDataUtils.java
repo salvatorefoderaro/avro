@@ -34,13 +34,13 @@ public class BinaryDataUtils {
       resultArray = byteArrayOutputStream1.toByteArray();
     } else {
 
-      GenericFixed a = new GenericData.Fixed(schema, "testString1".getBytes());
+      GenericFixed b = new GenericData.Fixed(schema, new byte[1024]);
 
       SpecificDatumWriter<GenericFixed> datumWriter1 = new SpecificDatumWriter<>(schema);
       ByteArrayOutputStream byteArrayOutputStream1 = new ByteArrayOutputStream();
       byteArrayOutputStream1.reset();
       BinaryEncoder binaryEncoder1 = new EncoderFactory().binaryEncoder(byteArrayOutputStream1, null);
-      datumWriter1.write(a, binaryEncoder1);
+      datumWriter1.write(b, binaryEncoder1);
       binaryEncoder1.flush();
       resultArray = byteArrayOutputStream1.toByteArray();
 

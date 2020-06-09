@@ -57,6 +57,21 @@
       </resource>
     </resources>
     <plugins>
+        <plugin>
+        <groupId>org.pitest</groupId>
+        <artifactId>pitest-maven</artifactId>
+        <version>1.4.11</version>
+        <configuration>
+          <targetClasses>
+            <param>org.apache.avro.io.BinaryData</param>
+            <param>org.apache.avro.specific.SpecificData</param>
+          </targetClasses>
+          <targetTests>
+            <param>org.apache.avro.io.TestBinaryDataCompare</param>
+            <param>org.apache.avro.specific.TestSpecificDataGetSchema</param>
+          </targetTests>
+        </configuration>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
@@ -105,6 +120,11 @@
   </build>
 
   <dependencies>
+    <dependency>
+      <groupId>org.pitest</groupId>
+      <artifactId>pitest-maven</artifactId>
+      <version>1.4.11</version>
+    </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-core</artifactId>
