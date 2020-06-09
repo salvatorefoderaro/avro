@@ -48,29 +48,29 @@ public class TestBinaryDataCompare {
 			{ getBS(Schema.Type.FIXED, true), getBS(Schema.Type.FIXED, true)
 				, 0, 0, getS(Schema.Type.FIXED), 0 },
 			{getBS(Schema.Type.ARRAY, true), getBS(Schema.Type.ARRAY, false),
-					1, 2, getS(Schema.Type.INT), -1}
-			/*{getBS(Schema.Type.INT, true), getBS(Schema.Type.DOUBLE, false)
+					1, 2, getS(Schema.Type.INT), -1},
+			{getBS(Schema.Type.INT, true), getBS(Schema.Type.DOUBLE, false)
 						, 0, 0, getS(Schema.Type.ARRAY), -1},
-			{getBS(Schema.Type.INT, true), getBS(Schema.Type.DOUBLE, false)
-							, 0, 0, getS(Schema.Type.BOOLEAN), -1},
-			{getBS(Schema.Type.INT, true), getBS(Schema.Type.DOUBLE, false)
-								, 0, 0, getS(Schema.Type.BYTES), -1},
+			{getBS(Schema.Type.MAP, true), getBS(Schema.Type.DOUBLE, false)
+							, 0, 0, getS(Schema.Type.BOOLEAN), 0},
+			{getBS(Schema.Type.NULL, true), getBS(Schema.Type.DOUBLE, false)
+								, 0, 0, getS(Schema.Type.BYTES), null},
 			{getBS(Schema.Type.INT, true), getBS(Schema.Type.DOUBLE, false)
 									, 0, 0, getS(Schema.Type.DOUBLE), -1},
-			{getBS(Schema.Type.INT, true), getBS(Schema.Type.DOUBLE, false)
-										, 0, 0, getS(Schema.Type.ENUM), -1},
-			{getBS(Schema.Type.INT, true), getBS(Schema.Type.DOUBLE, false)
+			{getBS(Schema.Type.ENUM, false), getBS(Schema.Type.ENUM, false)
+										, 0, 0, getS(Schema.Type.ENUM), 0},
+			{getBS(Schema.Type.ENUM, true), getBS(Schema.Type.ENUM, false)
+										, 0, 0, getS(Schema.Type.FLOAT), 0},
+			{getBS(Schema.Type.FLOAT, true), getBS(Schema.Type.DOUBLE, false)
 										, 0, 0, getS(Schema.Type.FLOAT), -1},
 			{getBS(Schema.Type.INT, true), getBS(Schema.Type.DOUBLE, false)
-										, 0, 0, getS(Schema.Type.LONG), -1},
+										, 0, 0, getS(Schema.Type.MAP), "Can't compare maps!"},
 			{getBS(Schema.Type.INT, true), getBS(Schema.Type.DOUBLE, false)
-										, 0, 0, getS(Schema.Type.MAP), -1},
+										, 0, 0, getS(Schema.Type.NULL), "java.io.EOFException"},
+			{getBS(Schema.Type.STRING, true), getBS(Schema.Type.STRING, false)
+										, 0, 0, getS(Schema.Type.STRING), "java.io.EOFException"},
 			{getBS(Schema.Type.INT, true), getBS(Schema.Type.DOUBLE, false)
-										, 0, 0, getS(Schema.Type.NULL), -1},
-			{getBS(Schema.Type.INT, true), getBS(Schema.Type.DOUBLE, false)
-										, 0, 0, getS(Schema.Type.STRING), -1},
-			{getBS(Schema.Type.INT, true), getBS(Schema.Type.DOUBLE, false)
-										, 0, 0, getS(Schema.Type.UNION), -1}*/
+										, 0, 0, getS(Schema.Type.UNION), -1}
 		});
 	}
 
@@ -142,9 +142,9 @@ public class TestBinaryDataCompare {
 
 		case INT:
 			if (createB1)
-				byteForSchema = ByteBuffer.allocate(4).putInt(1).array();
+				byteForSchema = ByteBuffer.allocate(8).putInt(1).array();
 			else
-				byteForSchema = ByteBuffer.allocate(4).putInt(2).array();
+				byteForSchema = ByteBuffer.allocate(8).putInt(2).array();
 			break;
 
 		case LONG:

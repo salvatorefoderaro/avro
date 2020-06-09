@@ -45,8 +45,17 @@ public class TestSpecificDataGetSchema {
   public static Collection BufferedChannelParameters() throws Exception {
     return Arrays.asList(new Object[][] { 
     	{null, "Unknown type: null"},
-    	{testabc("AAAA"), ERROR},
-        {testabc("float"), Schema.Type.FLOAT} 
+    	{testabc("int"), Schema.Type.INT},
+        {testabc("boolean"), Schema.Type.BOOLEAN}, 
+        {testabc("null"), Schema.Type.NULL}, 
+        {testabc("long"), Schema.Type.LONG}, 
+        {testabc("double"), Schema.Type.DOUBLE}, 
+        {testabc("bytes"), Schema.Type.BYTES}, 
+        {testabc("string"), Schema.Type.STRING}, 
+        {testabc("map"), Schema.Type.MAP}, 
+        {testabc("array"), Schema.Type.ARRAY},
+        {testabc("otherValue"), ERROR} 
+
     	});
   }
 
@@ -65,7 +74,7 @@ public class TestSpecificDataGetSchema {
       break;
       
     case "boolean":
-        classType = Integer.class;
+        classType = Boolean.class;
         break;
 
     case "null":
@@ -98,7 +107,7 @@ public class TestSpecificDataGetSchema {
       break;
 
     case "array":
-      attributeField = TestSpecificDataGetSchema.class.getDeclaredField("arr");
+      attributeField = TestSpecificDataGetSchema.class.getDeclaredField("array");
       classType = (ParameterizedType) attributeField.getGenericType();
       break;
 
@@ -110,14 +119,7 @@ public class TestSpecificDataGetSchema {
   }
 
   @Test
-  public void testSkipLong() throws IOException, NoSuchFieldException, SecurityException {
-
-    String schemaString = "{\"type\": \"enum\",\n" + "  \"name\": \"Schema.Type\",\n"
-    + "  \"symbols\" : [\"ARRAY\", \"INT\", \"DIAMONDS\", \"CLUBS\"]\n" + "}";
-    Schema schema = new Schema.Parser().parse(schemaString);
-
-    System.out.println(SpecificData.get().createEnum("INT", schema).getClass());
-    
+  public void testSkipLong() throws IOException, NoSuchFieldException, SecurityException { 
     
     try {
     	Assert.assertEquals(result, SpecificData.get().getSchema(classType).getType());
