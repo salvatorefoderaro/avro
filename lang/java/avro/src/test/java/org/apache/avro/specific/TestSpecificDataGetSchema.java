@@ -49,6 +49,7 @@ public class TestSpecificDataGetSchema {
         {testabc("boolean"), Schema.Type.BOOLEAN}, 
         {testabc("null"), Schema.Type.NULL}, 
         {testabc("long"), Schema.Type.LONG}, 
+        {testabc("float"), Schema.Type.FLOAT}, 
         {testabc("double"), Schema.Type.DOUBLE}, 
         {testabc("bytes"), Schema.Type.BYTES}, 
         {testabc("string"), Schema.Type.STRING}, 

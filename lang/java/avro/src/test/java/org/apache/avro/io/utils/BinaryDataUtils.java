@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import org.apache.avro.Schema;
 import org.apache.avro.generic.GenericData;
@@ -22,8 +23,10 @@ public class BinaryDataUtils {
     Schema schema = new Schema.Parser().parse(schemaString);
 
     if (createB1) {
+    	byte[] b1 = new byte[1024];
+    	b1[0] = 1;
 
-      GenericFixed a = new GenericData.Fixed(schema, new byte[1024]);
+      GenericFixed a = new GenericData.Fixed(schema, b1);
 
       SpecificDatumWriter<GenericFixed> datumWriter1 = new SpecificDatumWriter<>(schema);
       ByteArrayOutputStream byteArrayOutputStream1 = new ByteArrayOutputStream();
@@ -33,8 +36,11 @@ public class BinaryDataUtils {
       binaryEncoder1.flush();
       resultArray = byteArrayOutputStream1.toByteArray();
     } else {
+    	
+    	byte[] b1 = new byte[1024];
+    	b1[0] = 2;
 
-      GenericFixed b = new GenericData.Fixed(schema, new byte[1024]);
+      GenericFixed b = new GenericData.Fixed(schema, b1);
 
       SpecificDatumWriter<GenericFixed> datumWriter1 = new SpecificDatumWriter<>(schema);
       ByteArrayOutputStream byteArrayOutputStream1 = new ByteArrayOutputStream();
@@ -166,8 +172,8 @@ public class BinaryDataUtils {
 
     if (createB1) {
       Array<Integer> user1 = new GenericData.Array<Integer>(2, schema);
-      user1.add(0);
-      user1.add(1);
+      user1.add(-2);
+      user1.add(-1);
 
       SpecificDatumWriter<Array> datumWriter1 = new SpecificDatumWriter<>(schema);
       ByteArrayOutputStream byteArrayOutputStream1 = new ByteArrayOutputStream();
@@ -180,8 +186,8 @@ public class BinaryDataUtils {
     } else {
 
       Array<Integer> user2 = new GenericData.Array<Integer>(5, schema);
-      user2.add(0);
-      user2.add(1);
+      user2.add(-3);
+      user2.add(2);
       user2.add(2);
       user2.add(3);
       user2.add(4);
