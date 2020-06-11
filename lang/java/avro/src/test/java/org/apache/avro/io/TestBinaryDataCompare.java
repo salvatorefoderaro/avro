@@ -48,8 +48,20 @@ public class TestBinaryDataCompare {
 				, 0, 0, getS(Schema.Type.FIXED), 0 },
 			{getBS(Schema.Type.ARRAY, true), getBS(Schema.Type.ARRAY, false),
 					1, 2, getS(Schema.Type.INT), -1},
+					{getBS(Schema.Type.DOUBLE, true), getBS(Schema.Type.DOUBLE, false),
+						0, 0, getS(Schema.Type.DOUBLE), -1},
+						{getBS(Schema.Type.LONG, true), getBS(Schema.Type.LONG, false),
+							0, 0, getS(Schema.Type.LONG), -1},
 			{getBS(Schema.Type.INT, true), getBS(Schema.Type.DOUBLE, false)
 						, 0, 0, getS(Schema.Type.ARRAY), AvroRuntimeException.class},
+			
+			// Coverage
+			{getBS(Schema.Type.ARRAY, true), getBS(Schema.Type.ARRAY, false)
+								, 2, 1, getS(Schema.Type.ARRAY), AvroRuntimeException.class},
+			{getBS(Schema.Type.RECORD, true), getBS(Schema.Type.RECORD, true)
+									, 0, 0, getS(Schema.Type.RECORD), 0},
+			// Coverage
+			
 			{getBS(Schema.Type.MAP, true), getBS(Schema.Type.DOUBLE, false)
 							, 0, 0, getS(Schema.Type.BOOLEAN), 0},
 			{getBS(Schema.Type.NULL, true), getBS(Schema.Type.DOUBLE, false)
@@ -67,7 +79,7 @@ public class TestBinaryDataCompare {
 			{getBS(Schema.Type.INT, true), getBS(Schema.Type.DOUBLE, false)
 										, 0, 0, getS(Schema.Type.MAP), AvroRuntimeException.class},
 			{getBS(Schema.Type.INT, true), getBS(Schema.Type.DOUBLE, false)
-										, 0, 0, getS(Schema.Type.NULL), AvroRuntimeException.class},
+										, 0, 0, getS(Schema.Type.NULL), 0},
 			{getBS(Schema.Type.STRING, true), getBS(Schema.Type.STRING, false)
 										, 0, 0, getS(Schema.Type.STRING), -1},
 			{getBS(Schema.Type.INT, true), getBS(Schema.Type.DOUBLE, false)
@@ -264,6 +276,7 @@ public class TestBinaryDataCompare {
   
 		  case NULL:
 			  schema = Schema.create(Schema.Type.NULL);
+			  break;
   
 		  case RECORD:
 			  schemaString = "{\"namespace\": \"example.avro\",\n" + " \"type\": \"record\",\n" + " \"name\": \"User\",\n"

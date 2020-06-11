@@ -26,6 +26,9 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
+
+import org.apache.avro.AvroRuntimeException;
+import org.apache.avro.AvroTypeException;
 import org.apache.avro.Schema;
 import org.junit.Assert;
 import org.junit.Test;
@@ -40,22 +43,33 @@ public class TestSpecificDataGetSchema {
   private static final String ERROR = "Not a Specific class: class java.lang.Exception";
   Collection<String> array = new LinkedList<String>();
   Map<String, String> map = new HashMap<>();
+  Map<Integer, Integer> mapInt = new HashMap<>();
 
   @Parameterized.Parameters
   public static Collection BufferedChannelParameters() throws Exception {
     return Arrays.asList(new Object[][] { 
-    	{null, "Unknown type: null"},
-    	{testabc("int"), Schema.Type.INT},
-        {testabc("boolean"), Schema.Type.BOOLEAN}, 
-        {testabc("null"), Schema.Type.NULL}, 
-        {testabc("long"), Schema.Type.LONG}, 
-        {testabc("float"), Schema.Type.FLOAT}, 
-        {testabc("double"), Schema.Type.DOUBLE}, 
-        {testabc("bytes"), Schema.Type.BYTES}, 
-        {testabc("string"), Schema.Type.STRING}, 
-        {testabc("map"), Schema.Type.MAP}, 
-        {testabc("array"), Schema.Type.ARRAY},
-        {testabc("otherValue"), ERROR} 
+
+      // Coverage
+      {Integer.TYPE, Schema.Type.INT},
+      {Long.TYPE, Schema.Type.LONG},
+      {Float.TYPE, Schema.Type.FLOAT},
+      {Double.TYPE, Schema.Type.DOUBLE},
+      {Boolean.TYPE, Schema.Type.BOOLEAN},
+      {Void.TYPE, Schema.Type.NULL},
+      {testabc("mapInt"), AvroTypeException.class},
+
+      {null, AvroTypeException.class},
+      {testabc("int"), Schema.Type.INT},
+      {testabc("boolean"), Schema.Type.BOOLEAN}, 
+      {testabc("null"), Schema.Type.NULL}, 
+      {testabc("long"), Schema.Type.LONG}, 
+      {testabc("float"), Schema.Type.FLOAT}, 
+      {testabc("double"), Schema.Type.DOUBLE}, 
+      {testabc("bytes"), Schema.Type.BYTES}, 
+      {testabc("string"), Schema.Type.STRING}, 
+      {testabc("map"), Schema.Type.MAP}, 
+      {testabc("array"), Schema.Type.ARRAY},
+      {testabc("otherValue"), AvroRuntimeException.class} 
 
     	});
   }
@@ -107,6 +121,11 @@ public class TestSpecificDataGetSchema {
       classType = (ParameterizedType) attributeField.getGenericType();
       break;
 
+    case "mapInt":
+    attributeField = TestSpecificDataGetSchema.class.getDeclaredField("mapInt");
+    classType = (ParameterizedType) attributeField.getGenericType();
+    break;
+
     case "array":
       attributeField = TestSpecificDataGetSchema.class.getDeclaredField("array");
       classType = (ParameterizedType) attributeField.getGenericType();
@@ -125,7 +144,7 @@ public class TestSpecificDataGetSchema {
     try {
     	Assert.assertEquals(result, SpecificData.get().getSchema(classType).getType());
     } catch (Exception e) {
-    	Assert.assertEquals(result, e.getMessage());
+    	Assert.assertEquals(result, e.getClass());
     }
 
   }
