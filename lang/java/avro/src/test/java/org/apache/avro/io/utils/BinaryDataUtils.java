@@ -94,7 +94,7 @@ public class BinaryDataUtils {
 
   public static byte[] createUnionBytes(boolean createB1) throws IOException {
     byte[] resultArray = null;
-    String schemaString = "{ \n" + "   \"type\" : \"record\", \n" + "   \"namespace\" : \"tutorialspoint\", \n"
+    String schemaString = "{\"type\" : \"record\", \n" + "   \"namespace\" : \"tutorialspoint\", \n"
         + "   \"name\" : \"empdetails\", \n" + "   \"fields\" : \n" + "   [ \n"
         + "      {\"name\" : \"experience\", \"type\": [\"int\", \"null\"]}, {\"name\" : \"age\", \"type\": \"int\"} \n"
         + "   ] \n" + "}";
@@ -103,7 +103,7 @@ public class BinaryDataUtils {
     if (createB1) {
 
       GenericRecord a = new GenericData.Record(schema);
-      a.put("experience", null);
+      a.put("experience", 18);
       a.put("age", 0);
 
       SpecificDatumWriter<GenericRecord> datumWriter1 = new SpecificDatumWriter<>(schema);
@@ -115,16 +115,23 @@ public class BinaryDataUtils {
       resultArray = byteArrayOutputStream1.toByteArray();
 
     } else {
+    	
+    	schemaString = "{\"type\" : \"record\", \n" + "   \"namespace\" : \"tutorialspoint111\", \n"
+                + "   \"name\" : \"empdetails\", \n" + "   \"fields\" : \n" + "   [ \n"
+                + "      {\"name\" : \"experiences\", \"type\": [\"int\", \"null\"]}, {\"name\" : \"age\", \"type\": \"int\"} \n"
+                + "   ] \n" + "}";
+    	schema = new Schema.Parser().parse(schemaString);
 
-      GenericRecord a = new GenericData.Record(schema);
-      a.put("experience", null);
-      a.put("age", 0);
+      GenericRecord b = new GenericData.Record(schema);
+      b.put("experiences", 14);
+      b.put("age", 1234);
+     
 
       SpecificDatumWriter<GenericRecord> datumWriter1 = new SpecificDatumWriter<>(schema);
       ByteArrayOutputStream byteArrayOutputStream1 = new ByteArrayOutputStream();
       byteArrayOutputStream1.reset();
       BinaryEncoder binaryEncoder1 = new EncoderFactory().binaryEncoder(byteArrayOutputStream1, null);
-      datumWriter1.write(a, binaryEncoder1);
+      datumWriter1.write(b, binaryEncoder1);
       binaryEncoder1.flush();
       resultArray = byteArrayOutputStream1.toByteArray();
 

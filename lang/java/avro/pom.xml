@@ -57,6 +57,19 @@
       </resource>
     </resources>
     <plugins>
+        <plugin>
+        <groupId>org.pitest</groupId>
+        <artifactId>pitest-maven</artifactId>
+        <version>1.4.11</version>
+        <configuration>
+          <targetClasses>
+            <param>org.apache.avro.io.BinaryData</param>
+          </targetClasses>
+          <targetTests>
+            <param>org.apache.avro.io.TestBinaryDataCompare</param>
+          </targetTests>
+        </configuration>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
@@ -104,121 +117,12 @@
     </plugins>
   </build>
 
-  <profiles>
-    <profile>
-      <id>interop-data-generate</id>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>exec-maven-plugin</artifactId>
-            <version>${exec-plugin.version}</version>
-            <executions>
-              <!-- Generate random data for interop tests, using null codec -->
-              <execution>
-                <id>interop-generate-null-codec</id>
-                <phase>generate-resources</phase>
-                <configuration>
-                  <mainClass>org.apache.avro.util.RandomData</mainClass>
-                  <arguments>
-                    <argument>../../../share/test/schemas/interop.avsc</argument>
-                    <argument>../../../build/interop/data/java.avro</argument>
-                    <argument>100</argument>
-                  </arguments>
-                </configuration>
-                <goals><goal>java</goal></goals>
-              </execution>
-
-              <!-- Generate random data for interop tests, using deflate codec -->
-              <execution>
-                <id>interop-generate-deflate-codec</id>
-                <phase>generate-resources</phase>
-                <configuration>
-                  <mainClass>org.apache.avro.util.RandomData</mainClass>
-                  <arguments>
-                    <argument>../../../share/test/schemas/interop.avsc</argument>
-                    <argument>../../../build/interop/data/java_deflate.avro</argument>
-                    <argument>100</argument>
-                    <argument>deflate</argument>
-                  </arguments>
-                </configuration>
-                <goals><goal>java</goal></goals>
-              </execution>
-
-              <!-- Generate random data for interop tests, using snappy codec -->
-              <execution>
-                <id>interop-generate-snappy-codec</id>
-                <phase>generate-resources</phase>
-                <configuration>
-                  <mainClass>org.apache.avro.util.RandomData</mainClass>
-                  <arguments>
-                    <argument>../../../share/test/schemas/interop.avsc</argument>
-                    <argument>../../../build/interop/data/java_snappy.avro</argument>
-                    <argument>100</argument>
-                    <argument>snappy</argument>
-                  </arguments>
-                </configuration>
-                <goals><goal>java</goal></goals>
-              </execution>
-
-              <!-- Generate random data for interop tests, using bzip2 codec -->
-              <execution>
-                <id>interop-generate-bzip2-codec</id>
-                <phase>generate-resources</phase>
-                <configuration>
-                  <mainClass>org.apache.avro.util.RandomData</mainClass>
-                  <arguments>
-                    <argument>../../../share/test/schemas/interop.avsc</argument>
-                    <argument>../../../build/interop/data/java_bzip2.avro</argument>
-                    <argument>100</argument>
-                    <argument>bzip2</argument>
-                  </arguments>
-                </configuration>
-                <goals><goal>java</goal></goals>
-              </execution>
-
-              <!-- Generate random data for interop tests, using xz codec -->
-              <execution>
-                <id>interop-generate-xz-codec</id>
-                <phase>generate-resources</phase>
-                <configuration>
-                  <mainClass>org.apache.avro.util.RandomData</mainClass>
-                  <arguments>
-                    <argument>../../../share/test/schemas/interop.avsc</argument>
-                    <argument>../../../build/interop/data/java_xz.avro</argument>
-                    <argument>100</argument>
-                    <argument>xz</argument>
-                  </arguments>
-                </configuration>
-                <goals><goal>java</goal></goals>
-              </execution>
-
-              <!-- Generate random data for interop tests, using zstandard codec -->
-              <execution>
-                <id>interop-generate-zstandard-codec</id>
-                <phase>generate-resources</phase>
-                <configuration>
-                  <mainClass>org.apache.avro.util.RandomData</mainClass>
-                  <arguments>
-                    <argument>../../../share/test/schemas/interop.avsc</argument>
-                    <argument>../../../build/interop/data/java_zstandard.avro</argument>
-                    <argument>100</argument>
-                    <argument>zstandard</argument>
-                  </arguments>
-                </configuration>
-                <goals><goal>java</goal></goals>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
-
   <dependencies>
+    <dependency>
+      <groupId>org.pitest</groupId>
+      <artifactId>pitest-maven</artifactId>
+      <version>1.4.11</version>
+    </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-core</artifactId>

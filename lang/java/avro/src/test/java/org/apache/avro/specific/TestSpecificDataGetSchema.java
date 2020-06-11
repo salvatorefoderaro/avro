@@ -49,6 +49,8 @@ public class TestSpecificDataGetSchema {
   public static Collection BufferedChannelParameters() throws Exception {
     return Arrays.asList(new Object[][] { 
 
+      {null, AvroTypeException.class},
+      
       // Coverage
       {Integer.TYPE, Schema.Type.INT},
       {Long.TYPE, Schema.Type.LONG},
@@ -57,7 +59,8 @@ public class TestSpecificDataGetSchema {
       {Boolean.TYPE, Schema.Type.BOOLEAN},
       {Void.TYPE, Schema.Type.NULL},
       {testabc("mapInt"), AvroTypeException.class},
-
+      // Coverage
+      
       {null, AvroTypeException.class},
       {testabc("int"), Schema.Type.INT},
       {testabc("boolean"), Schema.Type.BOOLEAN}, 
