@@ -48,31 +48,29 @@ public class TestSpecificDataGetSchema {
   @Parameterized.Parameters
   public static Collection BufferedChannelParameters() throws Exception {
     return Arrays.asList(new Object[][] { 
-
-      {null, AvroTypeException.class},
-      
-      // Coverage
+    
+     // Coverage
       {Integer.TYPE, Schema.Type.INT},
       {Long.TYPE, Schema.Type.LONG},
       {Float.TYPE, Schema.Type.FLOAT},
       {Double.TYPE, Schema.Type.DOUBLE},
       {Boolean.TYPE, Schema.Type.BOOLEAN},
       {Void.TYPE, Schema.Type.NULL},
-      {testabc("mapInt"), AvroTypeException.class},
+      {getClassType("mapInt"), AvroTypeException.class},
       // Coverage
       
       {null, AvroTypeException.class},
-      {testabc("int"), Schema.Type.INT},
-      {testabc("boolean"), Schema.Type.BOOLEAN}, 
-      {testabc("null"), Schema.Type.NULL}, 
-      {testabc("long"), Schema.Type.LONG}, 
-      {testabc("float"), Schema.Type.FLOAT}, 
-      {testabc("double"), Schema.Type.DOUBLE}, 
-      {testabc("bytes"), Schema.Type.BYTES}, 
-      {testabc("string"), Schema.Type.STRING}, 
-      {testabc("map"), Schema.Type.MAP}, 
-      {testabc("array"), Schema.Type.ARRAY},
-      {testabc("otherValue"), AvroRuntimeException.class} 
+      {getClassType("int"), Schema.Type.INT},
+      {getClassType("boolean"), Schema.Type.BOOLEAN}, 
+      {getClassType("null"), Schema.Type.NULL}, 
+      {getClassType("long"), Schema.Type.LONG}, 
+      {getClassType("float"), Schema.Type.FLOAT}, 
+      {getClassType("double"), Schema.Type.DOUBLE}, 
+      {getClassType("bytes"), Schema.Type.BYTES}, 
+      {getClassType("string"), Schema.Type.STRING}, 
+      {getClassType("map"), Schema.Type.MAP}, 
+      {getClassType("array"), Schema.Type.ARRAY},
+      {getClassType("otherValue"), AvroRuntimeException.class} 
 
     	});
   }
@@ -82,7 +80,7 @@ public class TestSpecificDataGetSchema {
     this.result = result;
   }
 
-  public static java.lang.reflect.Type testabc(String classTypeString) throws NoSuchFieldException, SecurityException{
+  public static java.lang.reflect.Type getClassType(String classTypeString) throws NoSuchFieldException, SecurityException{
     
     java.lang.reflect.Type classType = null;
     Field attributeField = null;

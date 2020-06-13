@@ -384,6 +384,7 @@ public class BinaryData {
       }
     }
     buf[pos++] = (byte) n;
+
     return pos - start;
   }
 

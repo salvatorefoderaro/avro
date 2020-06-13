@@ -55,13 +55,11 @@ public class TestBinaryDataCompare {
 			{getBS(Schema.Type.INT, true), getBS(Schema.Type.DOUBLE, false)
 						, 0, 0, getS(Schema.Type.ARRAY), AvroRuntimeException.class},
 						
-			// Coverage
+			 // Coverage
 			{getBS(Schema.Type.ARRAY, true), getBS(Schema.Type.ARRAY, false)
-								, 2, 1, getS(Schema.Type.ARRAY), AvroRuntimeException.class},
+								, 1, 0, getS(Schema.Type.ARRAY), 1},
 			{getBS(Schema.Type.RECORD, true), getBS(Schema.Type.RECORD, true)
 									, 0, 0, getS(Schema.Type.RECORD), 0},
-			{getBS(Schema.Type.RECORD, true), getBS(Schema.Type.RECORD, true)
-										, 0, 0, getS(Schema.Type.RECORD), 0},
 			// Coverage
 			
 			{getBS(Schema.Type.MAP, true), getBS(Schema.Type.DOUBLE, false)
@@ -83,25 +81,42 @@ public class TestBinaryDataCompare {
 			{getBS(Schema.Type.INT, true), getBS(Schema.Type.DOUBLE, false)
 										, 0, 0, getS(Schema.Type.NULL), 0},
 			{getBS(Schema.Type.STRING, true), getBS(Schema.Type.STRING, false)
-										, 0, 0, getS(Schema.Type.STRING), -1},
+										, 0, 0, getS(Schema.Type.STRING), 35},
 			{getBS(Schema.Type.INT, true), getBS(Schema.Type.DOUBLE, false)
 										, 0, 0, getS(Schema.Type.UNION), AvroRuntimeException.class},
 			
+			// Mutazioni
 			// Mutante 162
 			{getBS(Schema.Type.FIXED, true), getBS(Schema.Type.FIXED, false)
 											, 0, 0, getS(Schema.Type.FIXED), -1},
 			
 			// Mutante 153 
 			{getBS(Schema.Type.UNION, true), getBS(Schema.Type.UNION, false)
-											, 0, 0, getS(Schema.Type.UNION), 1}, // Controllare
+											, 0, 0, getS(Schema.Type.UNION), -1}, // Controllare
 											
 			// Mutante 185
 			{getBS(Schema.Type.STRING, false), getBS(Schema.Type.STRING, true)
-				, 0, 0, getS(Schema.Type.STRING), 1},
+				, 1, 0, getS(Schema.Type.STRING), -35},
 			
 			// Mutante 112
 			{getBS(Schema.Type.BOOLEAN, true), getBS(Schema.Type.BOOLEAN, false)
 							, 0, 0, getS(Schema.Type.BOOLEAN), 1},
+			
+			// Mutante 130,136
+			{getBS(Schema.Type.ARRAY, true), getBS(Schema.Type.ARRAY, false)
+								, 0,1, getS(Schema.Type.ARRAY), 1},
+			
+			// Mutante 142:144
+			{getBS(Schema.Type.ARRAY, true), getBS(Schema.Type.ARRAY, true)
+								, 0,0, getS(Schema.Type.ARRAY), 0},
+			
+			// Mutante 142:144
+			{getBS(Schema.Type.ARRAY, true), getBS(Schema.Type.ARRAY, true)
+								, 0,1, getS(Schema.Type.ARRAY), -1},
+			
+			{getBS(Schema.Type.LONG, true), getBS(Schema.Type.LONG, true)
+									,0,0, getS(Schema.Type.LONG), 0}
+			
 			
 			/*
 			 * Mutante 76:controllare
@@ -235,7 +250,7 @@ public class TestBinaryDataCompare {
 				  binaryEncoder1.writeString("TestString");
   
 			  } else {
-				  binaryEncoder1.writeString("TestString1");
+				  binaryEncoder1.writeString("1TestStri");
 			  }
 				binaryEncoder1.flush();
 			byteForSchema = byteArrayOutputStream1.toByteArray();	

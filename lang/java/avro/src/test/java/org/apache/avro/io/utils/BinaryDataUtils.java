@@ -123,7 +123,7 @@ public class BinaryDataUtils {
     	schema = new Schema.Parser().parse(schemaString);
 
       GenericRecord b = new GenericData.Record(schema);
-      b.put("experiences", 14);
+      b.put("experiences", null);
       b.put("age", 1234);
      
 
@@ -179,8 +179,10 @@ public class BinaryDataUtils {
 
     if (createB1) {
       Array<Integer> user1 = new GenericData.Array<Integer>(2, schema);
+      user1.add(-5);
       user1.add(-2);
-      user1.add(-1);
+      user1.add(0);
+      user1.add(1);
 
       SpecificDatumWriter<Array> datumWriter1 = new SpecificDatumWriter<>(schema);
       ByteArrayOutputStream byteArrayOutputStream1 = new ByteArrayOutputStream();
@@ -193,9 +195,9 @@ public class BinaryDataUtils {
     } else {
 
       Array<Integer> user2 = new GenericData.Array<Integer>(5, schema);
-      user2.add(-3);
-      user2.add(2);
-      user2.add(2);
+      user2.add(0);
+      user2.add(-2);
+      user2.add(-1);
       user2.add(3);
       user2.add(4);
 
