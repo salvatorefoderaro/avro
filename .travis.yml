@@ -5,6 +5,6 @@ jdk:
 addons:
  sonarcloud:
   organization: salvatorefoderaro
-  token: f9a39f43a04ed7658b1aa06792313008bfd85b5e
+  token: 44974beda955c79075c451f44efe48a3095df401
 script: 
-- mvn verify -DfailIfNoTests=false sonar:sonar -Dsonar.projectKey=salvatorefoderaro_bookkeeper 
+- mvn verify -DfailIfNoTests=false sonar:sonar -Dsonar.projectKey=salvatorefoderaro_avro 
