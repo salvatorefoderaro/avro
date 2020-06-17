@@ -55,12 +55,12 @@ public class TestBinaryDataCompare {
 			{getBS(Schema.Type.INT, true), getBS(Schema.Type.DOUBLE, false)
 						, 0, 0, getS(Schema.Type.ARRAY), AvroRuntimeException.class},
 						
-			 // Coverage
+			/* // Coverage
 			{getBS(Schema.Type.ARRAY, true), getBS(Schema.Type.ARRAY, false)
 								, 1, 0, getS(Schema.Type.ARRAY), 1},
 			{getBS(Schema.Type.RECORD, true), getBS(Schema.Type.RECORD, true)
 									, 0, 0, getS(Schema.Type.RECORD), 0},
-			// Coverage
+			// Coverage */
 			
 			{getBS(Schema.Type.MAP, true), getBS(Schema.Type.DOUBLE, false)
 							, 0, 0, getS(Schema.Type.BOOLEAN), 0},
@@ -85,7 +85,7 @@ public class TestBinaryDataCompare {
 			{getBS(Schema.Type.INT, true), getBS(Schema.Type.DOUBLE, false)
 										, 0, 0, getS(Schema.Type.UNION), AvroRuntimeException.class},
 			
-			// Mutazioni
+			/* // Mutazioni
 			// Mutante 162
 			{getBS(Schema.Type.FIXED, true), getBS(Schema.Type.FIXED, false)
 											, 0, 0, getS(Schema.Type.FIXED), -1},
@@ -116,7 +116,7 @@ public class TestBinaryDataCompare {
 			
 			{getBS(Schema.Type.LONG, true), getBS(Schema.Type.LONG, true)
 									,0,0, getS(Schema.Type.LONG), 0}
-			
+			*/
 			
 			/*
 			 * Mutante 76:controllare
