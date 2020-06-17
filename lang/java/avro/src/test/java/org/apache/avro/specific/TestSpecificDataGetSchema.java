@@ -118,17 +118,17 @@ public class TestSpecificDataGetSchema {
       break;
 
     case "map":
-      attributeField = TestSpecificDataGetSchema.class.getDeclaredField("map");
+      attributeField = TestSpecificDataGetClass.class.getDeclaredField("map");
       classType = (ParameterizedType) attributeField.getGenericType();
       break;
 
     case "mapInt":
-    attributeField = TestSpecificDataGetSchema.class.getDeclaredField("mapInt");
+    attributeField = TestSpecificDataGetClass.class.getDeclaredField("mapInt");
     classType = (ParameterizedType) attributeField.getGenericType();
     break;
 
     case "array":
-      attributeField = TestSpecificDataGetSchema.class.getDeclaredField("array");
+      attributeField = TestSpecificDataGetClass.class.getDeclaredField("array");
       classType = (ParameterizedType) attributeField.getGenericType();
       break;
 

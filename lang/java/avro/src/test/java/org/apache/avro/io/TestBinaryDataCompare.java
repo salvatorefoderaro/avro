@@ -51,7 +51,7 @@ public class TestBinaryDataCompare {
 					{getBS(Schema.Type.DOUBLE, true), getBS(Schema.Type.DOUBLE, false),
 						0, 0, getS(Schema.Type.DOUBLE), -1},
 						{getBS(Schema.Type.LONG, true), getBS(Schema.Type.LONG, false),
-							0, 0, getS(Schema.Type.LONG), -1},
+							0, 0, getS(Schema.Type.LONG), 1},
 			{getBS(Schema.Type.INT, true), getBS(Schema.Type.DOUBLE, false)
 						, 0, 0, getS(Schema.Type.ARRAY), AvroRuntimeException.class},
 						
@@ -204,10 +204,10 @@ public class TestBinaryDataCompare {
   
 		  case FLOAT:
 			  if (createB1) {
-				  binaryEncoder1.writeFloat(2);
+				  binaryEncoder1.writeFloat(100000);
   
 			  } else {
-				  binaryEncoder1.writeFloat(3);
+				  binaryEncoder1.writeFloat(100000);
 			  }
 				binaryEncoder1.flush();
 			byteForSchema = byteArrayOutputStream1.toByteArray();	
@@ -215,10 +215,10 @@ public class TestBinaryDataCompare {
   
 		  case INT:
 			  if (createB1) {
-				  binaryEncoder1.writeInt(10);
+				  binaryEncoder1.writeInt(1000000000);
   
 			  } else {
-				  binaryEncoder1.writeInt(5);
+				  binaryEncoder1.writeInt(500000000);
 			  }
 				binaryEncoder1.flush();
 			byteForSchema = byteArrayOutputStream1.toByteArray();	
@@ -226,9 +226,9 @@ public class TestBinaryDataCompare {
   
 		  case LONG:
 			  if (createB1) {
-				  binaryEncoder1.writeLong(1L);
+				  binaryEncoder1.writeLong(9223372036854775807L);
 			  } else {
-				  binaryEncoder1.writeLong(2L);
+				  binaryEncoder1.writeLong(92233720368547758L);
 			  }
 				binaryEncoder1.flush();
 			byteForSchema = byteArrayOutputStream1.toByteArray();	

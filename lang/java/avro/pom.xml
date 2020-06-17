@@ -67,9 +67,13 @@
           <configuration>
             <targetClasses>
               <param>org.apache.avro.io.BinaryData</param>
+              <param>org.apache.avro.specific.SpecificData</param>
+           
             </targetClasses>
             <targetTests>
               <param>org.apache.avro.io.TestBinaryDataCompare</param>
+              <param>org.apache.avro.specific.TestSpecificDataGetSchema</param>
+              <param>org.apache.avro.specific.TestSpecificDataGetClass</param>
             </targetTests>
           </configuration>
         </plugin>
