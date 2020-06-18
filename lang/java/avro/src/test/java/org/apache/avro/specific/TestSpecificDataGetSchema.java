@@ -48,17 +48,8 @@ public class TestSpecificDataGetSchema {
   @Parameterized.Parameters
   public static Collection BufferedChannelParameters() throws Exception {
     return Arrays.asList(new Object[][] { 
-    
-      // Coverage
-      {Integer.TYPE, Schema.Type.INT},
-      {Long.TYPE, Schema.Type.LONG},
-      {Float.TYPE, Schema.Type.FLOAT},
-      {Double.TYPE, Schema.Type.DOUBLE},
-      {Boolean.TYPE, Schema.Type.BOOLEAN},
-      {Void.TYPE, Schema.Type.NULL},
-      {getClassType("mapInt"), AvroTypeException.class},
-      // Coverage
       
+      // Suite minimale
       {null, AvroTypeException.class},
       {getClassType("int"), Schema.Type.INT},
       {getClassType("boolean"), Schema.Type.BOOLEAN}, 
@@ -70,8 +61,18 @@ public class TestSpecificDataGetSchema {
       {getClassType("string"), Schema.Type.STRING}, 
       {getClassType("map"), Schema.Type.MAP}, 
       {getClassType("array"), Schema.Type.ARRAY},
-      {getClassType("otherValue"), AvroRuntimeException.class} 
+      {getClassType("otherValue"), AvroRuntimeException.class},
 
+      // Coverage
+      {Integer.TYPE, Schema.Type.INT},
+      {Long.TYPE, Schema.Type.LONG},
+      {Float.TYPE, Schema.Type.FLOAT},
+      {Double.TYPE, Schema.Type.DOUBLE},
+      {Boolean.TYPE, Schema.Type.BOOLEAN},
+      {Void.TYPE, Schema.Type.NULL},
+      {getClassType("mapInt"), AvroTypeException.class},
+      
+      
     	});
   }
 

@@ -50,6 +50,8 @@ public class TestSpecificDataGetClass {
   public static Collection BufferedChannelParameters() throws Exception {
     return Arrays.asList(new Object[][] { 
     	
+      // Suite minimale
+      {null, NullPointerException.class},
       {getS(Schema.Type.INT), Integer.TYPE},
       {getS(Schema.Type.UNION), null},
       {getS(Schema.Type.ENUM), null},
@@ -94,9 +96,10 @@ public class TestSpecificDataGetClass {
 		  schema = schema.create(Schema.Type.DOUBLE);
 		  break;
 
+		  
 	  case ENUM:
-		  schemaString = "{\"type\": \"enum\",\n" + "  \"name\": \"Suit\",\n"
-				  + "  \"symbols\" : [\"ARRAY\", \"INT\", \"DIAMONDS\", \"CLUBS\"]\n" + "}";
+		  schemaString = "{\"type\": \"enum\",\n" + "  \"name\": \"Schema.Type\",\n"
+				  + "  \"symbols\" : [\"ARRAY\", \"INT\"]\n" + "}";
 		  schema = new Schema.Parser().parse(schemaString);
 		  break;
 
@@ -127,7 +130,7 @@ public class TestSpecificDataGetClass {
 		  break;
 
 	  case RECORD:
-		  schemaString = "{\"namespace\": \"example.avro\",\n" + " \"type\": \"record\",\n" + " \"name\": \"User\",\n"
+		  schemaString = "{\"namespace\": \"null\",\n" + " \"type\": \"record\",\n" + " \"name\": \"User\",\n"
 				  + " \"fields\": [\n" + "     {\"name\": \"name\", \"type\": \"string\"},\n"
 				  + "     {\"name\": \"favorite_number\",  \"type\": [\"int\", \"null\"]},\n"
 				  + "     {\"name\": \"favorite_color\", \"type\": [\"string\", \"null\"]}\n" + " ]\n" + "}";

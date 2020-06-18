@@ -350,6 +350,8 @@ public class BinaryData {
     if ((n & ~0x7FL) != 0) {
       buf[pos++] = (byte) ((n | 0x80) & 0xFF);
       n >>>= 7;
+      System.out.println("1: " + n);
+      System.out.println("2: " + 9223372036854775807L / 64);
       if (n > 0x7F) {
         buf[pos++] = (byte) ((n | 0x80) & 0xFF);
         n >>>= 7;
@@ -384,7 +386,6 @@ public class BinaryData {
       }
     }
     buf[pos++] = (byte) n;
-
     return pos - start;
   }
 
