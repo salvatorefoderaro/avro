@@ -1,0 +1,9 @@
+AVRO
+
+org.apache.avro.io.BinaryData
+org.apache.avro.specific.SpecificData
+
+Bookkeeper
+
+org.apache.bookkeeper.bookie.BufferedChannel
+org.apache.bookkeeper.proto.checksum.DigestManager

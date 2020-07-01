@@ -194,7 +194,7 @@ public class TestBinaryDataCompare {
 				binaryEncoder1.writeInt(2147483647);
 
 			} else {
-				binaryEncoder1.writeInt(2147483);
+				binaryEncoder1.writeInt(2147483646);
 			}
 			binaryEncoder1.flush();
 			byteForSchema = byteArrayOutputStream1.toByteArray();	
@@ -204,7 +204,7 @@ public class TestBinaryDataCompare {
 			if (createB1) {
 				binaryEncoder1.writeLong(9223372036854775807L);
 			} else {
-				binaryEncoder1.writeLong(2130706432L);
+				binaryEncoder1.writeLong(9223372036854775806L);
 			}
 			binaryEncoder1.flush();
 			byteForSchema = byteArrayOutputStream1.toByteArray();	
