@@ -80,6 +80,12 @@ public class TestSpecificDataGetSchema {
     this.result = result;
   }
 
+  
+  /**
+   * 
+   * Return the Java Type from a String. 
+   *   
+   *    */
   public static java.lang.reflect.Type getClassType(String classTypeString) throws NoSuchFieldException, SecurityException{
     
     java.lang.reflect.Type classType = null;
@@ -140,7 +146,7 @@ public class TestSpecificDataGetSchema {
   }
 
   @Test
-  public void testSkipLong() throws IOException, NoSuchFieldException, SecurityException { 
+  public void testGetSchema() throws IOException, NoSuchFieldException, SecurityException { 
     
     try {
     	Assert.assertEquals(result, SpecificData.get().getSchema(classType).getType());

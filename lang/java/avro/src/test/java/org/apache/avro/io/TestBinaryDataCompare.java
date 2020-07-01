@@ -129,6 +129,12 @@ public class TestBinaryDataCompare {
 
 	}
 
+	  /**
+	   * 
+	   *  Return an array of byte created for the scpecified schema.
+	   * 
+	   *   
+	   *    */
 	public static byte[] getBS(Schema.Type type, boolean createB1) throws IOException {
 
 		ByteArrayOutputStream byteArrayOutputStream1 = new ByteArrayOutputStream();
@@ -244,6 +250,12 @@ public class TestBinaryDataCompare {
 
 	}
 
+  /**
+   * 
+   * Create a schema Object for a specified type.
+   * 
+   *   
+   *    */
 	public static Schema getS(Schema.Type type) {
 
 		Schema schema = null;
@@ -320,7 +332,7 @@ public class TestBinaryDataCompare {
 			break;
 
 		default:
-			Assert.assertEquals(0, 0);
+			
 		}
 
 		return schema;
