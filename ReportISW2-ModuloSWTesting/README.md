@@ -1,5 +1,19 @@
 # AVRO
 
-Per l'esecuzione di PIT su AVRO, è stato impostato un profilo nel file *pom.xml* del sottomodulo **AVRO** con la configurazione necessaria. Il comando per l'esecuzione è dunque il seguente:
+Esecuzione test:
 
-- mvn org.pitest:pitest-maven:mutationCoverage -Ppit-mutation-coverage
+- mvn verify
+
+Esecuzione PIT, dal modulo java/lang/avro:
+
+-  mvn verify org.pitest:pitest-maven:mutationCoverage -Ppit-mutation-coverage
+
+# Bookkeeper
+
+Esecuzione test:
+
+- mvn verify
+
+Esecuzione PIT, dal modulo bookkeeper-server:
+
+-  mvn verify org.pitest:pitest-maven:mutationCoverage
