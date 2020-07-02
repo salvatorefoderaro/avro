@@ -2,18 +2,18 @@
 
 Esecuzione test:
 
-- mvn verify
+- *mvn verify*
 
-Esecuzione PIT, dal modulo java/lang/avro:
+Esecuzione PIT, dal modulo **java/lang/avro**:
 
--  mvn verify org.pitest:pitest-maven:mutationCoverage -Ppit-mutation-coverage
+- *mvn verify org.pitest:pitest-maven:mutationCoverage -Ppit-mutation-coverage*
 
 # Bookkeeper
 
 Esecuzione test:
 
-- mvn verify
+- *mvn verify*
 
-Esecuzione PIT, dal modulo bookkeeper-server:
+Esecuzione PIT, dal modulo **bookkeeper-server**:
 
--  mvn verify org.pitest:pitest-maven:mutationCoverage
+- *mvn verify org.pitest:pitest-maven:mutationCoverage*
